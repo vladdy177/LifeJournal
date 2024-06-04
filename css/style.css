@@ -30,7 +30,7 @@ body{
 }
 
 .left{
-  width: 90%;
+  width: 60%;
   padding: 20px;
 }
 
@@ -176,16 +176,16 @@ body{
   background-color: var(--primary-clr);
 }
 
-.calendar .done:hover::after{
-  background-color: #f7f7e8;
-}
-
-.calendar .active .done::after{
+.calendar .days .done.active::after {
   background-color: #f7f7e8;
   bottom: 20%;
 }
 
-.calendar .active .done {
+.calendar .days .day:hover.done::after{
+  background-color: #f7f7e8;
+}
+
+.calendar.days .active.done {
   padding-bottom: 10px;
 }
 
@@ -239,5 +239,257 @@ body{
   border-radius: 0;
 }
 
+.container .right{
+  position: relative;
+  width: 40%;
+  min-height: 100%;
+  padding: 20px 0;
+}
 
+.right .today-date{
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px 0 70px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  text-transform: capitalize;
+}
 
+.today-date .habit-day {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #f7f7e8;
+}
+
+.today-date .habit-date {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #c5c5c5;
+}
+
+.habits {
+  width: 100%;
+  height: 100%;
+  max-height: 600px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+}
+
+.habits .habit{
+  position: relative;
+  width: 95%;
+  min-height: 60px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 20px 0 50px;
+  color: #f7f7e8;
+  background: linear-gradient(90deg, #415659, transparent);
+}
+
+.habits .habit:nth-child(even){
+  background: transparent;
+}
+
+.habits .habit:hover{
+  background: linear-gradient(90deg, var(--primary-clr), transparent);
+}
+
+.habits .habit .title{
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.habits .habit .title .habit-title{
+  font-size: 1rem;
+  font-weight: 400;
+  margin-left: 20px;
+  color: #f7f7e8;
+}
+
+.habits .habit .title i{
+  color: var(--primary-clr);
+  font-size: 0.5rem;
+}
+
+.habits .habit:hover .title i{
+  color: #f7f7e8;
+}
+
+.habits .habit .title:hover {
+  color: #f7f7e8;
+}
+
+.habits .habit::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  font-size: 2rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+  color: var(--primary-clr);
+  transform: translateY(-50%);
+}
+
+.habits .habit:hover::after{
+  display: flex;
+}
+
+.habits .no-habit {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #a5a5a5;
+}
+
+.add-habit-wrapper {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  width: 90%;
+  max-height: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  background: #f7f7e8;
+  transform: translateX(-50%);
+  transition: max-height 0.5s;
+}
+
+.add-habit-wrapper.active{
+  max-height: 300px;
+}
+
+.add-habit-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: #2e3a3c;
+  border-bottom: 1px solid #d1d1c6;
+}
+
+.add-habit-header .close{
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.add-habit-header .close:hover{
+  color: var(--primary-clr);
+}
+
+.add-habit-header .title {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.add-habit-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+}
+
+.add-habit-body .add-habit-input {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.add-habit-body .add-habit-input input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #d1d1c6;
+  padding: 0 10px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #2e3a3c;
+  background-color: transparent;
+}
+
+.add-habit-body .add-habit-input input::placeholder{
+  color: #a5a5a5;
+}
+
+.add-habit-body .add-habit-input input:focus {
+  border-color: var(--primary-clr);
+}
+
+.add-habit-body .add-habit-input input:focus::placeholder{
+  color: var(--primary-clr);
+}
+
+.add-habit-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.add-habit-btn{
+  height: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  color: #f7f7e8;
+  background-color: var(--primary-clr);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid var(--primary-clr);
+}
+
+.add-habit-btn:hover{
+  background: transparent;
+  color: #2e3a3c;
+}
+
+.add-habit{
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #2e3a3c;
+  border: 2px solid #2e3a3c;
+  border-radius: 50%;
+  opacity: 0.5;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.add-habit:hover {
+  opacity: 1;
+}
+
+.add-habit i {
+  pointer-events: none;
+}
