@@ -8,7 +8,13 @@ const calendar = document.querySelector('.calendar'),
   dateInput = document.querySelector('.date-input'),
   habitDay = document.querySelector(".habit-day"),
   habitDate = document.querySelector(".habit-date"),
-  habitsContainer = document.querySelector('.habits');
+  habitsContainer = document.querySelector('.habits'),
+  addHabitBtn = document.querySelector('.add-habit'),
+  addHabitWrapper = document.querySelector('.add-habit-wrapper'),
+  addHabitInput = document.querySelector('.add-habit-input'),
+  addHabitCloseBtn = document.querySelector('.close'),
+  addHabitName = document.querySelector('.habit-name'),
+  addHabitSubmitBtn = document.querySelector('.add-habit-btn');
 
   let today = new Date();
   let activeDay;
@@ -23,37 +29,43 @@ const calendar = document.querySelector('.calendar'),
   ];
 
 //Default habits array
-const habitsArray = [
-  {
-    day: 3,
-    month: 6,
-    year: 2024,
-    habits: [
-      {
-        title: 'Read 10 pages'
-      },
-      {
-        title: 'Workout'
-      }
-    ]
-  },
-  {
-    day: 15,
-    month: 6,
-    year: 2024,
-    habits: [
-      {
-        title: 'Read 20 pages'
-      },
-      {
-        title: 'Workout x2'
-      },
-      {
-        title: 'Go to bad at 12PM'
-      }
-    ]
-  }
-]
+// const habitsArray = [
+//   {
+//     day: 3,
+//     month: 6,
+//     year: 2024,
+//     habits: [
+//       {
+//         title: 'Read 10 pages'
+//       },
+//       {
+//         title: 'Workout'
+//       }
+//     ]
+//   },
+//   {
+//     day: 15,
+//     month: 6,
+//     year: 2024,
+//     habits: [
+//       {
+//         title: 'Read 20 pages'
+//       },
+//       {
+//         title: 'Workout x2'
+//       },
+//       {
+//         title: 'Go to bad at 12PM'
+//       }
+//     ]
+//   }
+// ]
+
+// Setting empty habits array
+let habitsArray = [];
+
+// Then calling get habits array function
+getHabits();
 
 //Function to add days
 function initCalendar() {
@@ -208,24 +220,22 @@ function gotoDate(){
 }
 
 
-// Add habit functions, logic, and constants
-const addHabitBtn = document.querySelector('.add-habit'),
-  addHabitWrapper = document.querySelector('.add-habit-wrapper'),
-  addHabitCloseBtn = document.querySelector('.close'),
-  addHabitName = document.querySelector('.habit-name');
-
+// Add habit functions, logic
 addHabitBtn.addEventListener('click', function(){
   addHabitWrapper.classList.toggle('active');
+  addHabitInput.setAttribute("autofocus", "");
 });
 
 addHabitCloseBtn.addEventListener('click', function(){
   addHabitWrapper.classList.remove('active');
+  addHabitInput.removeAttribute("autofocus");
 });
 
 // If click is outside add window
 document.addEventListener('click', (event)=>{
   if(event.target !== addHabitBtn && !addHabitWrapper.contains(event.target)){
     addHabitWrapper.classList.remove('active');
+    addHabitInput.removeAttribute("autofocus");
   }
 });
 
@@ -336,4 +346,108 @@ function updateHabits(date){
   }
 
   habitsContainer.innerHTML = habits;
+  // Save habits when update habit called
+  saveHabits();
+}
+
+// Function to add new habits
+addHabitSubmitBtn.addEventListener('click', function(){
+  const habitName = addHabitName.value;
+  // Some validation
+  if(habitName === ""){
+    alert("Please enter a valid habit name");
+    return;
+  }
+  const newHabit = {
+    title: habitName,
+  };
+
+  let habitAdded = false;
+
+  // Checking if habit list is not empty
+  if(habitsArray.length > 0){
+    // Checking if current day has already any event then add to that
+    habitsArray.forEach(item => {
+      if(item.day === activeDay &&
+        item.month === month + 1 &&
+        item.year === year
+      ) {
+        item.habits.push(newHabit);
+        habitAdded = true;
+      }
+    });
+  }
+
+  // If habit array is empty or day has no habits, create new
+  if(!habitAdded){
+    habitsArray.push(
+      {
+        day: activeDay,
+        month: month + 1,
+        year: year,
+        habits: [newHabit],
+      }
+    );
+  }
+
+  // Remove active class from add new habit form
+  addHabitWrapper.classList.remove(".active");
+  // Clear the fields
+  addHabitName.value = "";
+
+  // Show current added habit
+  updateHabits(activeDay);
+
+  // Add habit class to newly added day if not already
+  const activeDayElement = document.querySelector('.day.active');
+  //TODO Change done class logic
+  if(!activeDayElement.classList.contains('done')){
+    activeDayElement.classList.add('done');
+  }
+
+});
+
+
+// Remove habit function
+habitsContainer.addEventListener('click', (event)=>{
+  if(event.target.classList.contains('habit')){
+    const habitTitle = event.target.children[0].children[1].innerHTML;
+    // Get the title of habit than search in array by title and delete
+    habitsArray.forEach((habit) => {
+      if(
+        habit.day === activeDay &&
+        habit.month === month + 1 &&
+        habit.year === year
+      ){
+        habit.habits.forEach((item, index) => {
+          if(item.title === habitTitle){
+            habit.habits.splice(index, 1);
+          }
+        });
+        // If no habits remaining on that day remove complete day from array
+        if(habit.habits.length === 0){
+          habitsArray.splice(habitsArray.indexOf(habit), 1);
+          // After remove complete day also remove done class of that day
+          const activeDayElement = document.querySelector('.day.active');
+          if(activeDayElement.classList.contains('done')){
+            activeDayElement.classList.remove('done');
+          }
+        }
+      }
+    });
+    // After removing from array update habit
+    updateHabits(activeDay);
+  }
+});
+
+// Function for storing and getting habits from local storage
+function saveHabits(){
+  localStorage.setItem("habits", JSON.stringify(habitsArray));
+}
+
+function getHabits(){
+  if(localStorage.getItem("habits" === null)){
+    return;
+  }
+  habitsArray.push(...JSON.parse(localStorage.getItem("habits")));
 }
