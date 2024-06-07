@@ -66,36 +66,84 @@
 
     <section class="right">
       <div class="today-date">
-        <div class="habit-day">Mon</div>
-        <div class="habit-date">03 June 2024</div>
+        <div class="calendar-day">Mon</div>
+        <div class="calendar-date">03 June 2024</div>
       </div>
-      <div class="habits">
-        <!--Adding habits with JS-->
-        <div class="habit">
-          <div class="title">
-            <i class="fas fa-circle"></i>
-            <h3 class="habit-title">READ</h3>
-          </div>
-        </div>
+      <div class="todo-list">
+        <h2 class="section-header" id="goals-header">Monthly goals</h2>
+        <section class="goals">
+          <!--Adding goals with JS-->
+        </section>
+      <h2 class="section-header" id="habits-header">Habits</h2>
+        <section class="habits">
+          <!--Adding habits with JS-->
+        </section>
+        <h2 class="section-header" id="highlight-header">Day highlight</h2>
+        <section class="highlights">
+          <!--Adding highlight with JS-->
+        </section>
       </div>
-      <div class="add-habit-wrapper">
-        <div class="add-habit-header">
+
+      <div class="add-wrapper add-habit-wrapper">
+        <div class="add-header">
           <div class="title">Add habit</div>
           <i class="fas fa-times close"></i>
         </div>
-        <div class="add-habit-body">
-          <div class="add-habit-input">
-              <input type="text" placeholder="Habit name" class="habit-name" autofocus>
+        <div class="add-body">
+          <div class="add-input">
+              <input type="text" placeholder="Habit name" id="habit-name">
           </div>
         </div>
-        <div class="add-habit-footer">
-          <button class="add-habit-btn">Add new habit</button>
+        <div class="add-footer">
+          <button class="add-btn" id="add-habit-btn">Add new habit</button>
+        </div>
+      </div>
+
+      <div class="add-wrapper add-goal-wrapper">
+        <div class="add-header">
+          <div class="title">Add goal</div>
+          <i class="fas fa-times close"></i>
+        </div>
+        <div class="add-body">
+          <div class="add-input">
+            <input type="text" placeholder="Goal name" id="goal-name">
+          </div>
+        </div>
+        <div class="add-footer">
+          <button class="add-btn" id="add-goal-btn">Add new goal</button>
+        </div>
+      </div>
+
+      <div class="add-wrapper add-highlight-wrapper">
+        <div class="add-header">
+          <div class="title">Add day highlight</div>
+          <i class="fas fa-times close"></i>
+        </div>
+        <div class="add-body">
+          <div class="add-input">
+            <input type="text" placeholder="Day highlight" id="highlight-name">
+          </div>
+        </div>
+        <div class="add-footer">
+          <button class="add-btn" id="add-highlight-btn">Add new highlight</button>
         </div>
       </div>
     </section>
-    <button class="add-habit">
-      <i class="fas fa-plus"></i>
-    </button>
+
+    <section class="add-buttons-footer">
+      <button class="add-todo-btn" id="add-goal">
+        <i class="fas fa-plus"></i>
+      </button>
+
+      <button class="add-todo-btn" id="add-habit">
+        <i class="fas fa-plus"></i>
+      </button>
+
+      <button class="add-todo-btn" id="add-highlight">
+        <i class="fas fa-plus"></i>
+      </button>
+    </section>
+
   </main>
 
 </body>
