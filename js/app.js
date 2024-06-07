@@ -79,20 +79,6 @@ function initCalendar() {
   //Current month days
   for (let i = 1; i <= lastDate; i++){
 
-    //Check if highlight is written on current day
-    // let allCompletedHabitFound = true;
-    // habitsArray.forEach((habitObject) => {
-    //   if(
-    //     habitObject.day === i &&
-    //     habitObject.month === month + 1 &&
-    //     habitObject.year === year &&
-    //     !habitObject.completed
-    //   ) {
-    //     //If some habits are not completed
-    //     allCompletedHabitFound = false;
-    //   }
-    // });
-
     let highlightFound = false;
     highlightsArray.forEach((highlightObject) => {
       if(
